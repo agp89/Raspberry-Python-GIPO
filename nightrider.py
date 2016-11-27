@@ -1,6 +1,6 @@
-import RPi.GPIO as GPIO
-import time
 import os
+import time
+import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -50,23 +50,20 @@ mode = input("Which mode do you want to run? 1: auto 2: button? (1/2)")
 
 if mode == 1:
 	loopCount = 0
-	loopCount = input("How many times should NightRider to loop?: ")
+	loopCount = input("How many times should NightRider loop?: ")
 	print "Will run", loopCount, "times"
 	while loopCount > 0:
 		print "Runs left: ", loopCount
 		loopCount = loopCount - 1
 		ride ()
 elif mode == 2:
-	print "Press and hold the button to Nightrider"
+	print "Press and hold the button to Nightrider, press any key to exit"
 	while True:	
 		while GPIO.input(17) == False: #button pressed	
-			ride ()
-		while GPIO.input(17) == True: #button release
-			for key in ledDic:
-				led(key,False)		
-			time.sleep(1)
-			for key in ledDic:
-				led(key,True)						
-			time.sleep(1)
+			ride ()		
 else:
 	print "Invalid selection"
+
+#turn all leds off
+for key in ledDic:
+	led(key,False)
